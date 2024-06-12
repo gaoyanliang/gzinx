@@ -1,0 +1,6 @@
+{
+  "Name":"gzinx server Demo",
+  "Host":"127.0.0.1",
+  "TCPPort":8999,
+  "MaxConn":3
+}

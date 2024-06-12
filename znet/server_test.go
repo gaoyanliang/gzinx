@@ -85,8 +85,9 @@ func TestServer(t *testing.T) {
 	/*
 		服务端测试
 	*/
-	//1 创建一个server 句柄 s
-	s := NewServer("[gzinx V0.3]")
+	// 1. 创建一个server 句柄 s
+	s := NewServer()
+	// 1.2. 添加测试路由
 	s.AddRouter(&PingRouter{})
 
 	/*
@@ -94,6 +95,6 @@ func TestServer(t *testing.T) {
 	*/
 	go ClientTest()
 
-	//2 开启服务
+	// 2. 开启服务
 	s.Serve()
 }
