@@ -4,14 +4,18 @@ import "net"
 
 // 定义连接接⼝口
 type IConnection interface {
-	//启动连接，让当前连接开始⼯工作
+	//启动连接，让当前连接开始工作
 	Start()
-	//停⽌止连接，结束当前连接状态M
+	//停止连接，结束当前连接状态M
 	Stop()
-	//从当前连接获取原始的socket TCPConn GetTCPConnection() *net.TCPConn //获取当前连接ID
-	//获取远程客户端地址信息 RemoteAddr() net.Addr
+	//从当前连接获取原始的socket TCPConn
+	GetTCPConnection() *net.TCPConn
+	//获取当前连接ID
 	GetConnID() uint32
-	GetTCPConnection() net.Conn
+	//获取远程客户端地址信息
+	RemoteAddr() net.Addr
+	//直接将Message数据发送数据给远程的TCP客户端
+	SendMsg(msgId uint32, data []byte) error
 }
 
 // 所有 conn 链接在处理理业务的函数接口，
