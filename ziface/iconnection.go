@@ -11,6 +11,7 @@ type IConnection interface {
 	//从当前连接获取原始的socket TCPConn GetTCPConnection() *net.TCPConn //获取当前连接ID
 	//获取远程客户端地址信息 RemoteAddr() net.Addr
 	GetConnID() uint32
+	GetTCPConnection() net.Conn
 }
 
 // 所有 conn 链接在处理理业务的函数接口，
