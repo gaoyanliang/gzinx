@@ -3,6 +3,7 @@ package znet
 import (
 	"errors"
 	"fmt"
+	"gzinx/utils"
 	"gzinx/ziface"
 	"io"
 	"net"
@@ -98,12 +99,15 @@ func (c *Connection) StartReader() {
 		msg.SetData(data)
 
 		//得到当前客户端请求的Request数据
-		req := Request{
-			conn: c,
-			msg:  msg, //将之前的buf 改成 msg
+		req := Request{conn: c, msg: msg}//将之前的buf 改成 msg
+
+		if utils.GlobalObject.WorkerPoolSize > 0 {
+			//已经启动工作池机制，将消息交给Worker处理
+			c.MsgHandler.SendMsgToTaskQueue(&req)
+		} else {
+			//从绑定好的消息和对应的处理方法中执行对应的Handle方法
+			go c.MsgHandler.DoMsgHandler(&req)
 		}
-		//从绑定好的消息和对应的处理方法中执行对应的Handle方法
-		go c.MsgHandler.DoMsgHandler(&req)
 	}
 }
 

@@ -50,6 +50,9 @@ func (s *Server) Start() {
 
 	// 开启一个go去做服务端Linster业务
 	go func() {
+		//0. 启动Worker
+		s.msgHandler.StartWorkerPool()
+
 		//1. 获取一个 TCP 的 Addr
 		addr, err := net.ResolveTCPAddr(s.IPVersion, fmt.Sprintf("%s:%d", s.IP, s.Port))
 		if err != nil {
